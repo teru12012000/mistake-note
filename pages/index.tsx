@@ -1,21 +1,16 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import Loginform from '@/components/Loginform'
 import {useAuthState} from "react-firebase-hooks/auth"
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/firebase/firebase";
+
+import Link from 'next/link'
+import { Button } from '@mui/material'
+import { homepage, linktype } from '@/data/linkdata';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [user]=useAuthState(auth);
-  const handleSignUp=()=>{
-    signInWithPopup(auth,provider);
-  }
-  const handleSignOut=()=>{
-    auth.signOut();
-  }
   return (
     <>
       <Head>
@@ -24,24 +19,33 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {user?(
-          <Loginform
-            title={auth.currentUser?.displayName as string}
-            buttontext='サインアウト'
-            imgsrc={auth.currentUser?.photoURL as string}
-            click={handleSignOut}
-          />
-        
-      ):(
-        
-        <Loginform
-        title="サインアップ"
-        buttontext='Googleでログイン'
-        imgsrc={undefined}
-        click={handleSignUp}
-      />
-      )}
-      
+      <div
+        style={{
+          position:"absolute",
+          height:"100vh",
+          width:"100%",
+          textAlign:"center",
+        }}
+      >
+        <div
+          style={{
+            position:"relative",
+            top:"50%",
+            transform:"translateX(-50%),translateY(-50%)"
+          }}
+        >
+          <h1>さぁ！はじめよう！</h1>
+          {homepage.map((item:linktype,index:number)=>(
+            <div key={index}>
+              <Link href={item.link} target={item.target} style={{textDecoration:"none"}}>
+                <Button variant="contained" style={{margin:10}}>
+                  {item.title}
+                </Button>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   )
 }

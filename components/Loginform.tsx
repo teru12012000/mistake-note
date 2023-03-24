@@ -1,16 +1,43 @@
-
-import { Button } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Button, FormControl, IconButton, Input, InputAdornment, InputLabel, TextField } from "@mui/material";
 import Image from "next/image";
-import { FC } from "react";
+import { FC, useState, MouseEvent, SetStateAction, Dispatch, ChangeEvent } from "react";
 
 type Props={
   title:string;
   buttontext:string;
-  imgsrc:string|undefined;
+  buttontext2:string;
+  email:string;
+  password:string;
+  setEmail:Dispatch<SetStateAction<string>>;
+  setPassword:Dispatch<SetStateAction<string>>;
   click:()=>void;
+  click2:()=>Promise<void>;
 }
-const Loginform:FC<Props> = ({title,buttontext,imgsrc,click}) => {
-  
+const Loginform:FC<Props> = ({
+  title,
+  buttontext,
+  buttontext2,
+  email,
+  password,
+  setEmail,
+  setPassword,
+  click,
+  click2
+}) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+  const handlechangepassword=(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
+    setPassword(e.currentTarget.value);
+  }
+  const handlechangeemail=(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
+    setEmail(e.currentTarget.value);
+  }
   return (
     <div 
         style={{
@@ -28,20 +55,44 @@ const Loginform:FC<Props> = ({title,buttontext,imgsrc,click}) => {
           }}
         >
           <h1>{title}</h1>
-          {imgsrc?(
-            <img
-              src={imgsrc}
-              height={75}
-              width={75}
-              alt=""
-              style={{
-                borderRadius:"50%",
-              }}
+          <TextField
+            id="name"
+            label="Email Address"
+            type="email"
+            variant="outlined"
+            onChange={(e)=>handlechangeemail(e)}
+          /><br/>
+          <FormControl variant="outlined" style={{marginTop:40}}>
+            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <Input
+              id="outlined-adornment-password"
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              onChange={(e)=>handlechangepassword(e)}
             />
-          ):null}<br/>
+          </FormControl><br/>
+          <Button 
+            variant="contained"
+            style={{marginTop:20}}
+            onClick={click2}
+          >
+            {buttontext2}
+          </Button><br/>
+          
           <Button
             variant="text"
             onClick={click}
+            style={{marginTop:50}}
           >
             {buttontext}
           </Button>
