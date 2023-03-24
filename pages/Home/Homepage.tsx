@@ -1,3 +1,4 @@
+import NotLogin from "@/components/NotLogin";
 import { auth } from "@/firebase/firebase";
 import { Button } from "@mui/material";
 import { NextPage } from "next";
@@ -37,17 +38,7 @@ const Homepage:NextPage = () => {
             </Button>
           </div>
         ):(
-          <div>
-            <h1>ログインしてないぞ！出直して来い！！！！！！</h1>
-            <Link href="/">
-              <Button
-                variant="contained"
-              >
-                最初のページへ
-              </Button>
-            </Link>
-          </div>
-
+          <NotLogin/>
         )}
       </div>
     </>
