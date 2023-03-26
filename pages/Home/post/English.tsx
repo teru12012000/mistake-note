@@ -53,9 +53,11 @@ const English:NextPage = () => {
     setPassega(e.currentTarget.value);
   }
   const handlechangeimg=(e: ChangeEvent<HTMLInputElement>,setimg: Dispatch<SetStateAction<imglink[]>>,link:imglink[])=>{
-    const f:File=e.target.files?.[0] as File;
-    const value:string=e.target.files?.[0].name as string;
-    setimg([...link,{file:f,name:value} as imglink]);
+    const files:File=e.target.files?.[0] as File;
+    if(files){
+      const value:string=e.target.files?.[0].name as string;
+      setimg([...link,{file:files,name:value} as imglink]);
+    }
   }
   const handledeleteItem=(item:string,img: imglink[],setImg: Dispatch<SetStateAction<imglink[]>>)=>{
     const newItem:imglink[]=img.filter((i)=>i.name!==item);
