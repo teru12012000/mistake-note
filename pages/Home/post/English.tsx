@@ -44,7 +44,7 @@ const English:NextPage = () => {
     {
       title:"覚え方や解説",
       setPassage:setOther,
-      imglink:realanswerimg,
+      imglink:otherimg,
       setImg:setOtherimg,
       buttontitle:"解説の図など"
     }
@@ -54,10 +54,8 @@ const English:NextPage = () => {
   }
   const handlechangeimg=(e: ChangeEvent<HTMLInputElement>,setimg: Dispatch<SetStateAction<imglink[]>>,link:imglink[])=>{
     const files:File=e.target.files?.[0] as File;
-    if(files){
-      const value:string=e.target.files?.[0].name as string;
-      setimg([...link,{file:files,name:value} as imglink]);
-    }
+    const value:string=e.target.files?.[0].name as string;
+    setimg([...link,{file:files,name:value} as imglink]);
   }
   const handledeleteItem=(item:string,img: imglink[],setImg: Dispatch<SetStateAction<imglink[]>>)=>{
     const newItem:imglink[]=img.filter((i)=>i.name!==item);
@@ -86,37 +84,35 @@ const English:NextPage = () => {
           other:other,
           otherlink:otherlink,
         });
-        
-        questionimg.map((item,index)=>{
-          const storageRef=ref(storage,`${correctname}/question/${res.id}/${item.name}`);
-          uploadBytes(storageRef,item.file);
+        Promise.all([
+          ...questionimg?.map((item,index)=>{
+            const storageRef=ref(storage,`${correctname}/question/${res.id}/${item.name}`);
+            return uploadBytes(storageRef,item.file)
+          }),
+          ...deffanswerimg?.map((item,index)=>{
+            const storageRef=ref(storage,`${correctname}/deffanswer/${res.id}/${item.name}`);
+            return uploadBytes(storageRef,item.file)
+          }),
+          ...realanswerimg?.map((item,index)=>{
+            const storageRef=ref(storage,`${correctname}/realanswer/${res.id}/${item.name}`);
+            return uploadBytes(storageRef,item.file)
+          }),
+          ...otherimg?.map((item,index)=>{
+            const storageRef=ref(storage,`${correctname}/other/${res.id}/${item.name}`);
+            return uploadBytes(storageRef,item.file)
+          })
+        ]).then(()=>{
+          alert("All files uploaded successfully.");
+          // すべてのアップロードが完了したらページをリロードする
+          location.reload();
+        }).catch(error=>{
+          console.error(error);
         });
-        deffanswerimg.map((item,index)=>{
-          const storageRef=ref(storage,`${correctname}/deffanswer/${res.id}/${item.name}`);
-          uploadBytes(storageRef,item.file);
-        });
-        realanswerimg.map((item,index)=>{
-          const storageRef=ref(storage,`${correctname}/realanswer/${res.id}/${item.name}`);
-          uploadBytes(storageRef,item.file);
-        });
-        otherimg.map((item,index)=>{
-          const storageRef=ref(storage,`${correctname}/other/${res.id}/${item.name}`);
-          uploadBytes(storageRef,item.file);
-        });
-        setQuestion("");
-        setDeffanswer("");
-        setRealanswer("");
-        setOther("");
-        setQuestionimg([]);
-        setDeffanswerimg([]);
-        setRealanswerimg([]);
-        setOtherimg([]);
-        alert("登録しました");
-        window.location.reload();
       }catch(e){
         alert(`ERROR:${e}`);
       }
     }
+    
   }
   return (
     <>

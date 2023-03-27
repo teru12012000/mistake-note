@@ -3,10 +3,9 @@ import { imglink } from "@/data/textfields";
 import { auth, db, storage } from "@/firebase/firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-
 const English_get:NextPage = () => {
   const [user]=useAuthState(auth);
   const [defflist,setDefflist]=useState<list[]>([]);
@@ -22,6 +21,7 @@ const English_get:NextPage = () => {
   },[user])
   useEffect(()=>{
     const collectName:string=`${auth.currentUser?.email}_English`;
+    const newimgurl:imglink2[]=[];
     if(defflist){
       defflist.map(async(item:list,index:number)=>{
         const questionurl:Promise<string>[]=item.questionlink.map((str:string,index:number)=>getDownloadURL(ref(storage,`${collectName}/question/${item.id}/${str}`))) as Promise<string>[];
@@ -38,8 +38,9 @@ const English_get:NextPage = () => {
           realanswerlink:strreal,
           otherlink:strothre,
         }
-        setImgurl([...imgurl,imgdata]);
+        newimgurl.push(imgdata);
       })
+      setImgurl(newimgurl);
     }
   },[defflist])
   return (
@@ -50,16 +51,21 @@ const English_get:NextPage = () => {
           {defflist.map((item:list,index:number)=>(
             <div key={index}>
               <h2>question:{item.question}</h2>
-              {imgurl.map((str:imglink2,ind:number)=>(
-                <div key={ind}>
-                  {str.questionlink.map((i:string,num:number)=>(
-                    <figure key={num}>
-                      <img src={i} alt="" />
-                    </figure>
-                  ))}
+                {imgurl[index]?.questionlink.map((i:string,num:number)=>(
+                  <figure key={num}>
+                    <img src={i} alt="" />
+                  </figure>
+                ))}
+              <h3>answer:{item.realanswer}</h3>
+            </div>
+          ))}
+          {imgurl.map((item:imglink2,index:number)=>(
+            <div key={index}>
+              {item.questionlink.map((i:string,ind:number)=>(
+                <div key={i}>
+                  <p>{String(i)}</p>
                 </div>
               ))}
-              <h3>answer:{item.realanswer}</h3>
             </div>
           ))}
         </>
