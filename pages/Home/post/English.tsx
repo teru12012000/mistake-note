@@ -62,7 +62,7 @@ const English:NextPage = () => {
     setImg(newItem);
   }
   const handleClick=async()=>{
-    if(!(question||questionimg)||!(realanswer||realanswer)){
+    if(!(question||questionimg)||!(realanswer||realanswerimg)){
       alert("問題と正解くらいは書いておいてよ！")
     }else{
       const email:string=auth.currentUser?.email as string;
