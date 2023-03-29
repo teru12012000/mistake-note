@@ -1,38 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 間違いノート
 
-## Getting Started
+## 間違いノートとは
+個人的にあったらいいなと思うものであり
+塾講師の経験から定期テスト等の勉強に使えるとおもった。
+昔学校のワークからほとんど定期テストの問題が出題されており
+課題もワークがほとんどだった。ワークで間違えた問題を間違いノートに
+記載していた時のテストの合計の点数はよかったものである。
+これがアプリ化できたら現代の子供たちにとってはありがたいものではないかと思った。
 
-First, run the development server:
+## 使う技術
+- Next.js
+- firebase
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## アプリの内容
+主に中学生の定期テストに向けたもの。もしかしたら入試にも使えるかもしれない。
+教材等で間違えたものを投稿し、ふとしたときに閲覧できるようにしておく。
+分かりにくくなるので科目ごとに分ける予定
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 公開について
+仮に利用者が増えてしまった場合、firebaseから料金が取られてしまうため、公開はしない。
+もし、これから作ってほしいとの要望がありそれが増えたら公開しようと思う。基本的に勉強の一環として作っている。
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## これからの課題
+- 装飾
+- 削除の項目を作る
+- 理解したしてないのボタン項目を作成
+- その他の科目を作成(コンポーネント化させればできそう)
