@@ -79,9 +79,9 @@ const English_get:NextPage = () => {
                   <h3>{item.question}</h3>
                     {imgurl?(
                       <>
-                        {imgurl[index]?.questionlink.map((i:string,num:number)=>(
+                        {imgurl[index]?.questionlink.map((i:string,n:number)=>(
                           <CardMedia
-                            key={index}
+                            key={n}
                             component="img"
                             image={i}
                             alt="Paella dish"
@@ -98,7 +98,7 @@ const English_get:NextPage = () => {
                   <h3>{item.realanswer}</h3>
                   {imgurl[index]?.realanswerlink.map((i:string,num:number)=>(
                     <CardMedia
-                      key={index}
+                      key={num}
                       component="img"
                       image={i}
                       alt="picture"

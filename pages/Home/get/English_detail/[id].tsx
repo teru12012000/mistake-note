@@ -1,5 +1,6 @@
 import { imglink2, list } from "@/data/subjectdata";
 import { auth, db, storage } from "@/firebase/firebase";
+import { Box } from "@mui/material";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { GetStaticProps, NextPage } from "next";
@@ -50,43 +51,42 @@ const EngPage:NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
-        style={{
+      <Box
+        sx={{
           width:"75%",
           margin:"30px auto",
           border:"1px solid black",
-          borderRadius:"5%",
         }}
       >
-        <h3>問題</h3>
+      <h3>問題</h3>
         <p>{data?.question}</p>
         {imgurl?.questionlink.map((item:string,index:number)=>(
           <figure key={index}>
             <img src={item} alt="" />
           </figure>
         ))}
-        <h4>間違えた答え</h4>
+        <h3>間違えた答え</h3>
         <p>{data?.deffanswer}</p>
         {imgurl?.deffanswerlink.map((item:string,index:number)=>(
           <figure key={index}>
             <img src={item} alt="" />
           </figure>
         ))}
-        <h4>本当の答え</h4>
+        <h3>本当の答え</h3>
         <p>{data?.realanswer}</p>
         {imgurl?.realanswerlink.map((item:string,index:number)=>(
           <figure key={index}>
             <img src={item} alt="" />
           </figure>
         ))}
-        <h5>解説</h5>
+        <h3>解説</h3>
         <p>{data?.other}</p>
         {imgurl?.otherlink.map((item:string,index:number)=>(
           <figure key={index}>
             <img src={item} alt="" />
           </figure>
         ))}
-      </div>
+      </Box>
     </>
   );
 }
