@@ -62,49 +62,56 @@ const English_get:NextPage = () => {
       {defflist?(
         <>
           {defflist.map((item:list,index:number)=>(
-            <Link key={index} href={`/Home/get/English_detail/${item.id}`} style={{textDecoration:"none"}}>
-              <Card 
+            <div 
+              key={index}
+              style={{
+                width:"50%",
+                margin:"10px auto"
+              }}
+            >
+              <Link 
+                href={`/Home/get/English_detail/${item.id}`} 
                 style={{
-                  width:"50%",
-                  margin:"10px auto"
-                }}
-              >
-                <h2>question</h2>
-                <h3>{item.question}</h3>
-                  {imgurl?(
-                    <>
-                      {imgurl[index]?.questionlink.map((i:string,num:number)=>(
-                        <CardMedia
-                          key={index}
-                          component="img"
-                          image={i}
-                          alt="Paella dish"
-                          style={{
-                            width:"150px",
-                            display:"inline-block",
-                            marginRight:"5px",
-                          }}
-                        />
-                      ))}
-                    </>
-                  ):null}
-                <h2>answer</h2>
-                <h3>{item.realanswer}</h3>
-                {imgurl[index]?.realanswerlink.map((i:string,num:number)=>(
-                  <CardMedia
-                    key={index}
-                    component="img"
-                    image={i}
-                    alt="picture"
-                    style={{
-                      width:"150px",
-                      display:"inline-block",
-                      marginRight:"5px",
-                    }}
-                  />
-                ))}
-              </Card>
-            </Link>
+                  textDecoration:"none",
+                }}>
+                <Card>
+                  <h2>question</h2>
+                  <h3>{item.question}</h3>
+                    {imgurl?(
+                      <>
+                        {imgurl[index]?.questionlink.map((i:string,num:number)=>(
+                          <CardMedia
+                            key={index}
+                            component="img"
+                            image={i}
+                            alt="Paella dish"
+                            style={{
+                              width:"150px",
+                              display:"inline-block",
+                              marginRight:"5px",
+                            }}
+                          />
+                        ))}
+                      </>
+                    ):null}
+                  <h2>answer</h2>
+                  <h3>{item.realanswer}</h3>
+                  {imgurl[index]?.realanswerlink.map((i:string,num:number)=>(
+                    <CardMedia
+                      key={index}
+                      component="img"
+                      image={i}
+                      alt="picture"
+                      style={{
+                        width:"150px",
+                        display:"inline-block",
+                        marginRight:"5px",
+                      }}
+                    />
+                  ))}
+                </Card>
+              </Link>
+            </div>
           ))}
           <Link 
             href="/Home/post/English"
