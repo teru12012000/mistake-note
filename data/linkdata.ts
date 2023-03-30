@@ -15,3 +15,11 @@ export const homepage:linktype[]=[
     target:"",
   },
 ]
+
+export const subjectlink:linktype[]=[
+  {
+    link:"/Home/get/English/English_get",
+    title:"英語",
+    target:"",
+  }
+]

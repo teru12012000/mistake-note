@@ -1,4 +1,5 @@
 import NotLogin from "@/components/NotLogin";
+import { linktype, subjectlink } from "@/data/linkdata";
 import { auth } from "@/firebase/firebase";
 import { Button } from "@mui/material";
 import { NextPage } from "next";
@@ -28,8 +29,23 @@ const Homepage:NextPage = () => {
         }}
       >
         {user?(
-          <div>
-            <h1>こんにちは、{auth.currentUser?.email}</h1>
+          <div style={{marginTop:100}}>
+            <h1>間違いノートアプリ</h1>
+            <h2>こんにちは、{auth.currentUser?.email}</h2>
+            <div
+              style={{marginTop:20,marginBottom:20}}
+            >
+              {subjectlink.map((item:linktype,index:number)=>(
+                <div key={index} style={{marginTop:10}}>
+                  <Link href={item.link}>
+                    <Button variant="contained">
+                      {item.title}
+                    </Button>
+                  </Link>
+                </div>
+              ))}
+
+            </div>
             <Button
               variant="contained"
               onClick={()=>handleSignOut()}

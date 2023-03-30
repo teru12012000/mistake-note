@@ -6,11 +6,13 @@ import { addDoc, collection, getDoc, getDocs } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const English:NextPage = () => {
   const [user]=useAuthState(auth);
+  const router=useRouter();
   const [subject,setSubject]=useState<string>("英語");
   const [question,setQuestion]=useState<string>("");
   const [deffanswer,setDeffanswer]=useState<string>("");
@@ -73,6 +75,7 @@ const English:NextPage = () => {
       const deffanswerlink:string[]=deffanswerimg.map((item:imglink)=>item.name);
       const realanswerlink:string[]=realanswerimg.map((item:imglink)=>item.name);
       const otherlink:string[]=otherimg.map((item:imglink)=>item.name);
+      const timestamp=new Date();
       try{
         const res=await addDoc(postData,{
           question:question,
@@ -83,6 +86,7 @@ const English:NextPage = () => {
           realanswerlink:realanswerlink,
           other:other,
           otherlink:otherlink,
+          timestamp:timestamp,
         });
         Promise.all([
           ...questionimg?.map((item,index)=>{
@@ -104,7 +108,7 @@ const English:NextPage = () => {
         ]).then(()=>{
           alert("All files uploaded successfully.");
           // すべてのアップロードが完了したらページをリロードする
-          location.reload();
+          router.push("/Home/get/English/English_get");
         }).catch(error=>{
           console.error(error);
         });

@@ -2,13 +2,14 @@ import NotLogin from "@/components/NotLogin";
 import { imglink2, list } from "@/data/subjectdata";
 import { imglink } from "@/data/textfields";
 import { auth, db, storage } from "@/firebase/firebase";
-import { Card, CardMedia } from "@mui/material";
-import { collection, onSnapshot } from "firebase/firestore";
+import { Button, Card, CardMedia } from "@mui/material";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 const English_get:NextPage = () => {
   const [user]=useAuthState(auth);
   const [defflist,setDefflist]=useState<list[]>([]);
@@ -17,7 +18,7 @@ const English_get:NextPage = () => {
     if(user){
       const collectName:string=`${auth.currentUser?.email}_English`;
       const postData=collection(db,collectName);
-      onSnapshot(postData,(post)=>{
+      onSnapshot(query(postData, orderBy("timestamp", "asc")),(post)=>{
         const newData:list[]=post.docs.map((doc)=>({...doc.data(),id:doc.id} as list));
         const fixednewData:list[]=newData.slice().reverse();
         setDefflist(fixednewData);
@@ -51,9 +52,6 @@ const English_get:NextPage = () => {
       
     }
   },[defflist])
-  useEffect(()=>{
-    console.log(imgurl);
-  },[imgurl])
   return (
     <div>
       {user?(
@@ -67,7 +65,7 @@ const English_get:NextPage = () => {
             <Link key={index} href={`/Home/get/English_detail/${item.id}`} style={{textDecoration:"none"}}>
               <Card 
                 style={{
-                  width:"75%",
+                  width:"50%",
                   margin:"10px auto"
                 }}
               >
@@ -108,6 +106,29 @@ const English_get:NextPage = () => {
               </Card>
             </Link>
           ))}
+          <Link 
+            href="/Home/post/English"
+            style={{
+              position:"fixed",
+              bottom:"5%",
+              right:"5%",
+            }}
+          >
+            <Button 
+              variant="contained"
+              style={{
+                borderRadius:"50%",
+              }}
+              sx={{
+                width:60,
+                height:60,
+              }}
+            >
+              <AddCircleOutlineRoundedIcon
+                sx={{width:30,height:30}}
+              />
+            </Button>
+          </Link>
         </>
       ):(
         <p>まだ投稿はなし</p>

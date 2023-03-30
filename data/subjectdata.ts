@@ -8,6 +8,7 @@ export type list={
   realanswerlink:string[];
   other:string;
   otherlink:string[];
+  timestamp:Date,
   id:string;
 }
 export type imglink2={
