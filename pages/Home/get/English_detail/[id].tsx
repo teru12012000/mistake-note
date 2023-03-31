@@ -1,13 +1,12 @@
 import { imglink2, list } from "@/data/subjectdata";
 import { auth, db, storage } from "@/firebase/firebase";
-import { Box } from "@mui/material";
+import { Box, ImageList, ImageListItem } from "@mui/material";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 const EngPage:NextPage = () => {
   const router=useRouter();
   const pageid:string=router.query.id as string;
@@ -60,32 +59,85 @@ const EngPage:NextPage = () => {
       >
       <h3>問題</h3>
         <p>{data?.question}</p>
-        {imgurl?.questionlink.map((item:string,index:number)=>(
-          <figure key={index}>
-            <img src={item} alt="" />
-          </figure>
-        ))}
+        {imgurl?.questionlink[0]?(
+          <>
+            <ImageList cols={3}>
+              {imgurl?.questionlink.map((item:string,index:number)=>(
+                <ImageListItem 
+                  key={index}
+                  sx={{width:200}}
+                >
+                  <img
+                    src={item}
+                    alt={item}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </>
+        ):null}
+        
         <h3>間違えた答え</h3>
         <p>{data?.deffanswer}</p>
-        {imgurl?.deffanswerlink.map((item:string,index:number)=>(
-          <figure key={index}>
-            <img src={item} alt="" />
-          </figure>
-        ))}
+        {imgurl?.deffanswerlink[0]?(
+          <>
+            <ImageList cols={3}>
+              {imgurl?.deffanswerlink.map((item:string,index:number)=>(
+                <ImageListItem 
+                  key={index}
+                  sx={{width:200}}
+                >
+                  <img
+                    src={item}
+                    alt={item}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </>
+        ):null}
         <h3>本当の答え</h3>
         <p>{data?.realanswer}</p>
-        {imgurl?.realanswerlink.map((item:string,index:number)=>(
-          <figure key={index}>
-            <img src={item} alt="" />
-          </figure>
-        ))}
+        {imgurl?.realanswerlink[0]?(
+          <>
+            <ImageList cols={3}>
+              {imgurl?.realanswerlink.map((item:string,index:number)=>(
+                <ImageListItem 
+                  key={index}
+                  sx={{width:200}}
+                >
+                  <img
+                    src={item}
+                    alt={item}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </>
+        ):null}
         <h3>解説</h3>
         <p>{data?.other}</p>
-        {imgurl?.otherlink.map((item:string,index:number)=>(
-          <figure key={index}>
-            <img src={item} alt="" />
-          </figure>
-        ))}
+        {imgurl?.otherlink[0]?(
+          <>
+            <ImageList cols={3}>
+              {imgurl?.otherlink.map((item:string,index:number)=>(
+                <ImageListItem 
+                  key={index}
+                  sx={{width:200}}
+                >
+                  <img
+                    src={item}
+                    alt={item}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </>
+        ):null}
       </Box>
     </>
   );
